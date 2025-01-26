@@ -1,24 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>League Page</title>
+    <title th:text="${leagueName} + ' League Page'">League Page</title>
+    <link rel="stylesheet" href="/css/matchbox.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<h1 th:text="${leagueName}"></h1>
-<h2 th:text="${country}"></h2>
+<header class="text-center py-3">
+    <h1 th:text="${leagueName}"></h1>
+</header>
+<main class="container">
+    <!-- Today Matches Section -->
+    <section>
+        <h2>Today's Matches</h2>
+        <div th:each="match : ${todayMatches}">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${match.homeTeam} + ' vs ' + ${match.awayTeam}"></h5>
+                    <p class="card-text">Time: <span th:text="${match.matchDate}"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h3>Teams</h3>
-<ul>
-    <li th:each="team : ${teams}">
-        <span th:text="${team.name}"></span>
-    </li>
-</ul>
+    <!-- Results Section -->
+    <section>
+        <h2>Results</h2>
+        <div th:each="match : ${results}">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${match.homeTeam} + ' vs ' + ${match.awayTeam}"></h5>
+                    <p class="card-text">Score: <span th:text="${match.homeScore}"></span> - <span th:text="${match.awayScore}"></span></p>
+                    <p class="card-text">Date: <span th:text="${match.matchDate}"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h3>Matches</h3>
-<ul>
-    <li th:each="match : ${matches}">
-        <span th:text="${match.homeTeamId}"></span> vs <span th:text="${match.awayTeamId}"></span>
-    </li>
-</ul>
+    <!-- Fixtures Section -->
+    <section>
+        <h2>Upcoming Fixtures</h2>
+        <div th:each="match : ${fixtures}">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${match.homeTeam} + ' vs ' + ${match.awayTeam}"></h5>
+                    <p class="card-text">Date: <span th:text="${match.matchDate}"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standings Section -->
+    <section>
+        <h2>Standings</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Position</th>
+                <th>Team</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="standing : ${standings}">
+                <td th:text="${standing.position}"></td>
+                <td th:text="${standing.teamName}"></td>
+                <td th:text="${standing.points}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
 </body>
 </html>
